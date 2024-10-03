@@ -1,12 +1,10 @@
 from structured_logging.sinks.i_sink import ISink
 from json import dumps
-import sys
 
-class consoleSink(ISink):
+class ConsoleSink(ISink):
     def sink_data(self, data: dict):
         print(dumps(data, indent=4))
-        sys.stdout.flush()
 
 
 if __name__ == '__main__':
-    consoleSink().sink_data({'test': 'test'})
+    ConsoleSink().sink_data({'test': 'test'})

@@ -1,7 +1,7 @@
 from structured_logging.sinks.i_sink import ISink
 import json
 
-class fileSink(ISink):
+class FileSink(ISink):
     def __init__(self, file_path: str) -> None:
         self.path = file_path
 
@@ -15,4 +15,9 @@ class fileSink(ISink):
 
 
 if __name__ == '__main__':
-    fileSink('test.json').sink_data({'test': 'test'})
+    thisdict = {
+        "brand": "Ford",
+        "model": "Mustang",
+        "year": 1964
+    }
+    fileSink('output.txt').sink_data(thisdict)
