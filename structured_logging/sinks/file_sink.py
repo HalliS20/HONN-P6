@@ -3,6 +3,7 @@ import json
 
 class FileSink(ISink):
     def __init__(self, file_path: str) -> None:
+        self.file = None
         self.path = file_path
 
     def sink_data(self, data: dict):
