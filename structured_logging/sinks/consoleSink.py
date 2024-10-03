@@ -6,3 +6,7 @@ class consoleSink(ISink):
     def sink_data(self, data: dict):
         print(dumps(data, indent=4))
         sys.stdout.flush()
+
+
+if __name__ == '__main__':
+    consoleSink().sink_data({'test': 'test'})

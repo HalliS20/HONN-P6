@@ -11,3 +11,8 @@ class fileSink(ISink):
         self.file = open(self.path, 'a')
         self.file.write(json_data + '\n')
         self.file.close()
+
+
+
+if __name__ == '__main__':
+    fileSink('test.json').sink_data({'test': 'test'})
