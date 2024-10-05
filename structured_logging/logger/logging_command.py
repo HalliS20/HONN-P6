@@ -1,7 +1,5 @@
 from structured_logging.command_queue.command import Command
 from structured_logging.configuration.logger_config import LoggerConfig
-from structured_logging.logger.logger import Logger
-
 
 class LoggingCommand(Command):
     def __init__(self, config: LoggerConfig, data: dict):
