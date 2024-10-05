@@ -1,8 +1,6 @@
 
-from injector import Module, Binder, provider
-from structured_logging.command_queue.queue import Queue
+from injector import Module, provider
 from structured_logging.configuration.logger_config import LoggerConfig
-from structured_logging.logger.logger import Logger
 
 
 class AppModule(Module):
@@ -16,11 +14,5 @@ class AppModule(Module):
     @provider
     def provide_config(self) -> LoggerConfig:
         return self.__logger_config
-
-
-    def configure(self, binder: Binder) -> None:
-
-        binder.bind(Logger, to=Logger)
-        binder.bind(Queue, to=Queue)
 
 

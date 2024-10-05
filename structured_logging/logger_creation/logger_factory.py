@@ -15,4 +15,5 @@ if __name__ == '__main__':
     builder = LoggerConfigBuilder()
     config = builder.build()
     logger = create_logger(config)
+    logger.log(message="Hello, World!")
 
