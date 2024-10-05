@@ -66,6 +66,8 @@ if __name__ == '__main__':
     processor = TimestampProcessor()
     builder.add_processor(processor)
     config = builder.build()
+
+
     log = {'message': 'Hello, World!'}
     processed = config.processor.handle(log)
     config.sink.sink_data(processed)
