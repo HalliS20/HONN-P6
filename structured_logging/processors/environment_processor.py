@@ -7,5 +7,5 @@ class EnvironmentProcessor(AbstractProcessor):
         self.environment = environment
 
     def process(self, data:dict) -> dict:
-        data["environment"] = self.environment
+        data["environment"] = self.environment.value
         return data

@@ -3,6 +3,7 @@ from structured_logging.configuration.logger_config import LoggerConfig
 from structured_logging.processors.environment_processor import EnvironmentProcessor
 from structured_logging.processors.i_processor import IProcessor
 from structured_logging.processors.null_processor import NullProcessor
+from structured_logging.processors.timestamp_processor import TimestampProcessor
 from structured_logging.sinks.console_sink import ConsoleSink
 from structured_logging.sinks.file_sink import FileSink
 from structured_logging.sinks.i_sink import ISink
@@ -11,8 +12,8 @@ from structured_logging.sinks.i_sink import ISink
 class LoggerConfigBuilder:
     def __init__(self):
         self._sink = ConsoleSink()
-        self._path = None
-        self._processor = NullProcessor()
+        self._last_processor = NullProcessor()
+        self._first_processor = self._last_processor
         self._wait_delay_in_seconds = 0
         self._is_async = False
 
@@ -40,23 +41,31 @@ class LoggerConfigBuilder:
         return self
 
     def add_processor(self, processor: IProcessor) -> 'LoggerConfigBuilder':
-        self._processor.set_next(processor)
+        self._last_processor = self._last_processor.set_next(processor)
         return self
 
     def _clear(self):
-        self._sink = None
-        self._path = None
-        self._processors = []
-        self._environment = None
+        self._sink = ConsoleSink()
+        self._processors = NullProcessor()
         self._wait_delay_in_seconds = 0
         self._is_async = False
 
 
     def build(self) -> LoggerConfig:
-        config = LoggerConfig()
-        config.sink = self._sink
-        config.processor = self._processor
-        config.is_async = self._is_async
-        config.async_wait_delay_in_seconds = self._wait_delay_in_seconds
+        built_config = LoggerConfig(sink = self._sink,
+                              processor = self._first_processor,
+                              is_async = self._is_async,
+                              async_wait_delay_in_seconds = self._wait_delay_in_seconds)
         self._clear()
-        return config
+        return built_config
+
+if __name__ == '__main__':
+    builder = LoggerConfigBuilder()
+    builder.with_console_sink()
+    builder.add_environment(Environment.DEVELOPMENT)
+    processor = TimestampProcessor()
+    builder.add_processor(processor)
+    config = builder.build()
+    log = {'message': 'Hello, World!'}
+    processed = config.processor.handle(log)
+    config.sink.sink_data(processed)
