@@ -4,6 +4,8 @@ from structured_logging.configuration.logger_config import LoggerConfig
 from structured_logging.logger.logging_command import LoggingCommand
 from injector import inject
 
+from structured_logging.logger_creation.logger_config_builder import LoggerConfigBuilder
+
 
 class Logger:
     @inject
@@ -19,3 +21,10 @@ class Logger:
         else:
             processed = self.__logger_config.processor.handle(data)
             self.__logger_config.sink.sink_data(processed)
+
+
+if __name__ == '__main__':
+    builder = LoggerConfigBuilder()
+    config = builder.build()
+    queue = Queue(0)
+    logger = Logger(config, queue)

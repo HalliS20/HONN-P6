@@ -19,8 +19,9 @@ class Queue:
 
     def __process(self):
         while True:
-            try:
+            if len(self.__queue) == 0:
+                time.sleep(self.__async_delay)
+            else:
                 command = self.__queue.pop(0)
                 command.execute()
-            except self.__queue == []:
-                time.sleep(self.__async_delay)
+
