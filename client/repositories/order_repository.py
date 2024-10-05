@@ -1,8 +1,11 @@
+from injector import inject
+
 from client.infrastructure.settings.settings import Settings
 from client.models.order import Order
 
 
 class OrderRepository:
+    @inject
     def __init__(self, settings: Settings):
         self.__settings = settings
 
