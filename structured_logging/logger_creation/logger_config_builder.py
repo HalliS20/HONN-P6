@@ -40,8 +40,8 @@ class LoggerConfigBuilder:
         self.add_processor(env_proc)
         return self
 
-    def add_processor(self, processor: IProcessor) -> 'LoggerConfigBuilder':
-        self._last_processor = self._last_processor.set_next(processor)
+    def add_processor(self, input_processor: IProcessor) -> 'LoggerConfigBuilder':
+        self._last_processor = self._last_processor.set_next(input_processor)
         return self
 
     def _clear(self):
